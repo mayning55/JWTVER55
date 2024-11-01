@@ -20,6 +20,7 @@ namespace IdentityDemo.Controllers
         }
 
         [HttpPost]
+        [NoCheckJWTVerAttribute]
         public async Task<ActionResult> ManagerUserRoleExists()
         {
             if(await roleManager.RoleExistsAsync("Admin")==false)
@@ -53,7 +54,7 @@ namespace IdentityDemo.Controllers
                     return BadRequest();
                 }
             }
-            if (!await userManager.IsInRoleAsync(userAdmin,"User"))
+            if (!await userManager.IsInRoleAsync(userAdmin,"Admin"))
             {
                 var result = await userManager.AddToRoleAsync(userAdmin,"Admin");
                 if (!result.Succeeded)
